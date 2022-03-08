@@ -1,0 +1,48 @@
+# split windows like vim
+# vim's definition of a horizontal/vertical split is reversed from tmux's
+bind s split-window -v
+bind v split-window -h
+
+# move around panes with hjkl, as one would in vim after pressing ctrl-w
+bind h run-shell -b 'tmux-keep-zoom L'
+bind j run-shell -b 'tmux-keep-zoom D'
+bind k run-shell -b 'tmux-keep-zoom U'
+bind l run-shell -b 'tmux-keep-zoom R'
+unbind z
+bind z run-shell -b 'tmux-resize-screen'
+
+# vi-style controls for copy mode
+setw -g mode-keys vi
+set -g base-index 1
+setw -g pane-base-index 1
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+setw -g mode-keys vi
+set -g display-time 1
+
+# vim mode change delay fix
+set -sg escape-time 0
+
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+set -g @plugin 'dracula/tmux'
+
+
+# available plugins: battery, cpu-usage, git, gpu-usage, ram-usage, network, network-bandwidth, network-ping, weather, time
+set -g @dracula-plugins "cpu-usage ram-usage"
+
+# available colors: white, gray, dark_gray, light_purple, dark_purple, cyan, green, orange, red, pink, yellow
+# set -g @dracula-[plugin-name]-colors "[background] [foreground]"
+set -g @dracula-cpu-usage-colors "pink dark_gray"
+
+set -g @dracula-show-powerline true
+
+
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+
